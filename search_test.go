@@ -4,27 +4,26 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/require"
+	"github.com/yyle88/done"
 	"gopkg.in/yaml.v3"
 )
 
-func TestChangeYamlFieldValue(t *testing.T) {
+func TestSearchSubNode(t *testing.T) {
 	content := `# 这是注释
 # 这是内容
 info:
-    title: OLD-TITLE
+    title: DOC-TITLE
     version: 1.0.0
 `
-	// modify yaml file change the info.title from "OLD-TITLE" to "NEW-TITLE" return the new content
-	newContent := ChangeYamlFieldValue([]byte(content), []string{"info", "title"}, func(node *yaml.Node) {
-		node.SetString("NEW-TITLE")
-	})
-	t.Log(string(newContent))
+	data := []byte(content)
 
-	resContent := `# 这是注释
-# 这是内容
-info:
-    title: NEW-TITLE
-    version: 1.0.0
-`
-	require.Equal(t, resContent, string(newContent))
+	var rootNode yaml.Node
+	// 把内容转换到对象里
+	done.Done(yaml.Unmarshal(data, &rootNode))
+	// 搜到内容且设置内容
+	subNode := SearchSubNode(rootNode, []string{"info", "version"})
+
+	require.NotNil(t, subNode)
+	t.Log(subNode.Value)
+	require.Equal(t, "1.0.0", subNode.Value)
 }

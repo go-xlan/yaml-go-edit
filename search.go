@@ -1,13 +1,19 @@
 package goyamlv3x
 
 import (
+	"strings"
+
 	"gopkg.in/yaml.v3"
 )
 
-func SearchSubNode(rootNode yaml.Node, route []string) *yaml.Node {
-	for _, node := range rootNode.Content {
-		if node.Kind == yaml.MappingNode {
-			if subNode := RecurseSearch(node, route); subNode != nil {
+func LookupSubNode(node *yaml.Node, path string) *yaml.Node {
+	return SearchSubNode(node, strings.Split(path, "."))
+}
+
+func SearchSubNode(node *yaml.Node, route []string) *yaml.Node {
+	for _, sub := range node.Content {
+		if sub.Kind == yaml.MappingNode {
+			if subNode := RecurseSearch(sub, route); subNode != nil {
 				return subNode
 			}
 		}

@@ -28,3 +28,23 @@ info:
 `
 	require.Equal(t, resContent, string(newContent))
 }
+
+func TestModifyYamlFieldValue(t *testing.T) {
+	content := `# 这是注释
+# 这是内容
+info:
+    title: DOC-TITLE
+    version: 1.0.0
+`
+	// modify yaml file change the info.title from "OLD-TITLE" to "NEW-TITLE" return the new content
+	newContent := ModifyYamlFieldValue([]byte(content), "info.version", "1.0.1")
+	t.Log(string(newContent))
+
+	resContent := `# 这是注释
+# 这是内容
+info:
+    title: DOC-TITLE
+    version: 1.0.1
+`
+	require.Equal(t, resContent, string(newContent))
+}

@@ -1,4 +1,4 @@
-package goyamlv3x
+package goyamlv3up
 
 import (
 	"strings"

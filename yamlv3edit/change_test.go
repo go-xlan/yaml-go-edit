@@ -1,8 +1,9 @@
-package goyamlv3up
+package yamlv3edit_test
 
 import (
 	"testing"
 
+	"github.com/go-xlan/yaml-go-edit/yamlv3edit"
 	"github.com/stretchr/testify/require"
 	"gopkg.in/yaml.v3"
 )
@@ -15,7 +16,7 @@ info:
     version: 1.0.0
 `
 	// modify yaml file change the info.title from "OLD-TITLE" to "NEW-TITLE" return the new content
-	newContent := ChangeYamlFieldValue([]byte(content), []string{"info", "title"}, func(node *yaml.Node) {
+	newContent := yamlv3edit.ChangeYamlFieldValue([]byte(content), []string{"info", "title"}, func(node *yaml.Node) {
 		node.SetString("NEW-TITLE")
 	})
 	t.Log(string(newContent))
@@ -37,7 +38,7 @@ info:
     version: 1.0.0
 `
 	// modify yaml file change the info.title from "OLD-TITLE" to "NEW-TITLE" return the new content
-	newContent := ModifyYamlFieldValue([]byte(content), "info.version", "1.0.1")
+	newContent := yamlv3edit.ModifyYamlFieldValue([]byte(content), "info.version", "1.0.1")
 	t.Log(string(newContent))
 
 	resContent := `# 这是注释

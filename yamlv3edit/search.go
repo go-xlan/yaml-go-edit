@@ -1,4 +1,4 @@
-package goyamlv3up
+package yamlv3edit
 
 import (
 	"strings"

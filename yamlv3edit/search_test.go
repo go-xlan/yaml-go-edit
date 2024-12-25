@@ -1,8 +1,9 @@
-package goyamlv3up
+package yamlv3edit_test
 
 import (
 	"testing"
 
+	"github.com/go-xlan/yaml-go-edit/yamlv3edit"
 	"github.com/stretchr/testify/require"
 	"github.com/yyle88/done"
 	"gopkg.in/yaml.v3"
@@ -21,7 +22,7 @@ info:
 	// 把内容转换到对象里
 	done.Done(yaml.Unmarshal(data, &rootNode))
 	// 搜到内容且设置内容
-	subNode := LookupSubNode(&rootNode, "info.title")
+	subNode := yamlv3edit.LookupSubNode(&rootNode, "info.title")
 
 	require.NotNil(t, subNode)
 	t.Log(subNode.Value)
@@ -41,7 +42,7 @@ info:
 	// 把内容转换到对象里
 	done.Done(yaml.Unmarshal(data, &rootNode))
 	// 搜到内容且设置内容
-	subNode := SearchSubNode(&rootNode, []string{"info", "version"})
+	subNode := yamlv3edit.SearchSubNode(&rootNode, []string{"info", "version"})
 
 	require.NotNil(t, subNode)
 	t.Log(subNode.Value)
